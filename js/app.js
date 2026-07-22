@@ -599,7 +599,7 @@ ${JSON.stringify(ctx, null, 2)}`;
 
   // ---- Sample data (mirrors the ONEHRMS template) ---------------------
   function loadSample() {
-    const devs = ["GRACIAS,ROLAND JOHN,POCSIDIO", "RIVERA,JERAMEEL,SUGUITAN", "TOMAS,MAY ANNE,GUZMAN", "VELORIA,ROBERT MAVE,ESTACIO"];
+    const devs = ["DELA CRUZ,JUAN,SANTOS", "REYES,MARIA,LOPEZ", "TAN,PAOLO,GARCIA", "SANTOS,ANGELA,CRUZ"];
     const types = ["SYSTEM ENHANCEMENT", "SYSTEM BUG", "INITIATIVE", "SUPPORT", "GROUP TASK"];
     const stages = { done: ["FOR QA", "PASSED BY QA AND FOR SRA REVIEW", "END", "FAILED BY QA"], ongoing: ["RESUME", "TASK GRABBED", "PAUSE"], todo: ["ASSIGNED", "TASK GRABBED"] };
     const statuses = ["Done Development", "Done Development", "Ongoing", "Not Yet Started", "Ongoing"];
@@ -628,9 +628,9 @@ ${JSON.stringify(ctx, null, 2)}`;
       }
     }
     const goals = [
-      { "No.": 1, "Task Name": "Continue HeyBuzz media handling", "Assigned To": "GRACIAS,ROLAND JOHN,POCSIDIO", "Tentative Start Date": wsToSerial(new Date()) },
-      { "No.": 2, "Task Name": "Finish Probationary Evaluation processing", "Assigned To": "RIVERA,JERAMEEL,SUGUITAN", "Tentative Start Date": "" },
-      { "No.": 3, "Task Name": "Banned Words maintenance in HeyBuzz", "Assigned To": "TOMAS,MAY ANNE,GUZMAN", "Tentative Start Date": wsToSerial(new Date()) }
+      { "No.": 1, "Task Name": "Continue HeyBuzz media handling", "Assigned To": "DELA CRUZ,JUAN,SANTOS", "Tentative Start Date": wsToSerial(new Date()) },
+      { "No.": 2, "Task Name": "Finish Probationary Evaluation processing", "Assigned To": "REYES,MARIA,LOPEZ", "Tentative Start Date": "" },
+      { "No.": 3, "Task Name": "Banned Words maintenance in HeyBuzz", "Assigned To": "TAN,PAOLO,GARCIA", "Tentative Start Date": wsToSerial(new Date()) }
     ];
     const issues = [
       { "No.": 1, "Issues & Concerns": "ABS server event logs fill up quickly, blocking user access.", "Recommendation": "Add token-expiry validation and rotate logs on a schedule." }

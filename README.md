@@ -30,7 +30,7 @@ with these columns:
 
 | No. | Assigned To | Task Name | Module | Request Type | Progress | Started Development | Ended Development | Completed Date | Status |
 |-----|-------------|-----------|--------|--------------|----------|---------------------|-------------------|----------------|--------|
-| 1 | GRACIAS,ROLAND JOHN,POCSIDIO | 000125-0726-001 Form: EMPLOYEE PROFILE … | ONEHRMS | SYSTEM ENHANCEMENT | FOR QA | 46220 | 46225 | NULL | Done Development |
+| 1 | DELA CRUZ,JUAN,SANTOS | 000125-0726-001 Form: EMPLOYEE PROFILE … | ONEHRMS | SYSTEM ENHANCEMENT | FOR QA | 46220 | 46225 | NULL | Done Development |
 
 - **Assigned To** is the only required column. Names in `LAST,FIRST,MIDDLE`
   format are auto-cleaned to readable `First Last`.
