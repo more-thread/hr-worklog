@@ -19,8 +19,9 @@ Pages.
    tasks-per-developer (stacked by status), tasks-by-request-type (total vs done),
    a completion-by-developer bar, and a per-developer breakdown table.
 4. **Writes the analysis** — a weekly summary, improvement recommendations, and
-   risk/blocker callouts. Without a key it uses built-in logic; with your Anthropic
-   API key it uses **Claude** for a polished narrative and chart captions.
+   risk/blocker callouts. Without a key it uses built-in logic; with an API key it
+   uses **Google Gemini (free tier)** or **Claude** for a polished narrative and
+   chart captions.
 5. **Print / Save as PDF** for sharing (button top-right of the report).
 
 ## Expected Excel template (ONEHRMS weekly monitoring)
@@ -87,7 +88,33 @@ python3 -m http.server 8137
 # then visit http://localhost:8137
 ```
 
-## Deploy to GitHub Pages (free)
+## Hosting
+
+This repo is **private**, and free GitHub Pages only works on **public** repos.
+So there are two good paths:
+
+### Recommended for a private repo — Netlify or Cloudflare Pages (free)
+
+Both can deploy the site from a **private** GitHub repo — the repo stays private,
+the site is publicly reachable (it contains no real data). It's a static site with
+no build step, so setup is a few clicks:
+
+**Netlify**
+1. Sign in at [app.netlify.com](https://app.netlify.com) with GitHub.
+2. **Add new site → Import an existing project → GitHub**, authorize, pick
+   `hr-weekly-report`.
+3. Leave build command **empty** and publish directory **`.`** (root). Deploy.
+4. You get a URL like `https://<name>.netlify.app`. Every `git push` redeploys.
+
+**Cloudflare Pages** — same idea at
+[dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages → Create →
+Pages → Connect to Git**; framework preset **None**, build command empty, output
+directory `.`.
+
+### GitHub Pages (only if you make the repo public)
+
+Free GitHub Pages requires a public repo. If you make it public (the code has no
+real data — spreadsheets are git-ignored):
 
 ### Option A — GitHub web UI (no command line)
 
@@ -117,29 +144,36 @@ Then follow steps 3–6 above (Settings → Pages).
 > The `js/xlsx.full.min.js` and `js/chart.umd.min.js` libraries are vendored
 > (committed into the repo), so the site works offline and needs no CDN.
 
-## Using Claude for AI analysis
+## Using AI for the written analysis
 
-The AI narrative is **optional and opt-in**:
+The AI narrative is **optional and opt-in** — the built-in analysis already
+produces a full report for free with no key. For an AI-written narrative, open
+**AI analysis settings** in the app and pick a provider:
 
-1. In the app, open **Claude AI settings**.
-2. Paste your Anthropic API key (get one at
-   [console.anthropic.com](https://console.anthropic.com/settings/keys)).
-3. Generate a report, then click **✨ Generate with Claude**.
+### Google Gemini — free (recommended)
 
-**About the key & security:** GitHub Pages only serves static files, so there's
-nowhere to safely store a shared secret key. Instead, each user supplies *their
-own* key at runtime. The key is:
+1. Get a **free** API key at
+   [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) —
+   free tier, **no billing required**.
+2. In the app choose provider **Google Gemini**, paste the key, pick a model
+   (Gemini 2.0 Flash is a good free default).
+3. Generate a report, then click **✨ Generate with AI**.
+
+### Claude — paid API key
+
+Choose provider **Claude** and paste an Anthropic API key from
+[console.anthropic.com](https://console.anthropic.com/settings/keys). Note: a
+**claude.ai Free/Pro *subscription* does not work here** — the API is billed
+separately and needs an API key with credits.
+
+### Key handling & security
+
+Each user supplies *their own* key at runtime. The key is:
 
 - kept **only in your browser** (in memory, or in `localStorage` if you tick
   "Remember key on this device"),
-- **never** committed to the repo or sent anywhere except directly to Anthropic's
-  API,
-- sent from the browser using Anthropic's
-  `anthropic-dangerous-direct-browser-access` header (direct browser calls).
-
-If you'd rather users never handle a key, the alternative is a small serverless
-proxy (Cloudflare Workers / Netlify Functions) that holds the key server-side —
-that requires a second free account and is a larger setup than pure GitHub Pages.
+- **never** committed to the repo or sent anywhere except directly to the
+  provider's API (Google or Anthropic).
 
 Without a key, the report still generates using the built-in (non-AI) analysis.
 

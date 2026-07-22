@@ -19,15 +19,19 @@
     <!-- SETTINGS -->
     <div class="card no-print">
       <details class="settings" id="settingsBox">
-        <summary>Claude AI settings (optional — for written analysis)</summary>
+        <summary>AI analysis settings (optional — for a written narrative)</summary>
         <div class="field">
-          <label for="apiKey">Anthropic API key</label>
-          <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
-          <div class="hint">
-            Stored only in <strong>your</strong> browser (never uploaded to any server or committed to the site).
-            Get a key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>.
-            Leave blank to use built-in (non-AI) analysis instead.
-          </div>
+          <label for="provider">AI provider</label>
+          <select id="provider">
+            <option value="gemini" selected>Google Gemini — free tier</option>
+            <option value="claude">Claude (Anthropic) — paid API key</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="apiKey" id="keyLabel">API key</label>
+          <input type="password" id="apiKey" placeholder="" autocomplete="off" spellcheck="false" />
+          <div class="hint" id="keyHint"></div>
+          <div class="hint">Stored only in <strong>your</strong> browser — never uploaded to any server or committed to the site. Leave blank to use built-in (non-AI) analysis.</div>
           <div class="row-inline">
             <input type="checkbox" id="rememberKey" />
             <label for="rememberKey">Remember key on this device (saved in browser localStorage)</label>
@@ -35,11 +39,7 @@
         </div>
         <div class="field">
           <label for="model">Model</label>
-          <select id="model">
-            <option value="claude-opus-4-8" selected>Claude Opus 4.8 (most capable)</option>
-            <option value="claude-sonnet-5">Claude Sonnet 5 (faster / cheaper)</option>
-            <option value="claude-haiku-4-5">Claude Haiku 4.5 (fastest / cheapest)</option>
-          </select>
+          <select id="model"></select>
         </div>
       </details>
     </div>
@@ -98,7 +98,7 @@
             <h2>Analysis &amp; recommendations</h2>
             <p class="sub" id="aiSourceLabel">Generated for HR stakeholders.</p>
           </div>
-          <button class="btn primary no-print" id="aiBtn" type="button">✨ Generate with Claude</button>
+          <button class="btn primary no-print" id="aiBtn" type="button">✨ Generate with AI</button>
         </div>
         <div id="aiNotice"></div>
         <div id="aiContent"></div>
