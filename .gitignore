@@ -1,0 +1,9 @@
+# OS junk
+.DS_Store
+
+# Real / internal spreadsheets are NOT committed to this (public) repo.
+# The synthetic examples/*.csv files are safe to publish; real employee data is not.
+# Drop real .xlsx files anywhere in the project to test locally — they stay ignored.
+*.xlsx
+*.xls
+!examples/*.csv

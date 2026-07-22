@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Weekly Report Generator</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="app-head">
+      <div class="logo">📊</div>
+      <div>
+        <h1>HR Weekly Report Generator</h1>
+        <p>Upload your weekly Excel &rarr; get a visual, AI-analyzed report for stakeholders.</p>
+      </div>
+    </header>
+
+    <!-- SETTINGS -->
+    <div class="card no-print">
+      <details class="settings" id="settingsBox">
+        <summary>Claude AI settings (optional — for written analysis)</summary>
+        <div class="field">
+          <label for="apiKey">Anthropic API key</label>
+          <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+          <div class="hint">
+            Stored only in <strong>your</strong> browser (never uploaded to any server or committed to the site).
+            Get a key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>.
+            Leave blank to use built-in (non-AI) analysis instead.
+          </div>
+          <div class="row-inline">
+            <input type="checkbox" id="rememberKey" />
+            <label for="rememberKey">Remember key on this device (saved in browser localStorage)</label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="model">Model</label>
+          <select id="model">
+            <option value="claude-opus-4-8" selected>Claude Opus 4.8 (most capable)</option>
+            <option value="claude-sonnet-5">Claude Sonnet 5 (faster / cheaper)</option>
+            <option value="claude-haiku-4-5">Claude Haiku 4.5 (fastest / cheapest)</option>
+          </select>
+        </div>
+      </details>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="card no-print">
+      <h2>1. Upload the weekly Excel</h2>
+      <p class="sub">Drag &amp; drop a <code>.xlsx</code>/<code>.xls</code>/<code>.csv</code> file. Everything is parsed in your browser — no data leaves your machine.</p>
+      <label class="dropzone" id="dropzone">
+        <div class="big">📁</div>
+        <p>Drop your file here or click to choose</p>
+        <small id="fileName">No file selected</small>
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" />
+      </label>
+      <div class="btn-row">
+        <button class="btn ghost" id="sampleBtn" type="button">Load sample data</button>
+      </div>
+      <div id="uploadNotice"></div>
+    </div>
+
+    <!-- COLUMN MAPPING -->
+    <div class="card no-print hidden" id="mapCard">
+      <h2>2. Map your columns</h2>
+      <p class="sub">Auto-detected from your headers. Adjust any that are wrong. <span class="req" style="color:var(--bad)">*</span> = required.</p>
+      <div class="field hidden" id="sheetPickerWrap" style="margin-top:0">
+        <label for="sheetPicker">Sheet</label>
+        <select id="sheetPicker"></select>
+        <div class="hint">This workbook has multiple sheets — the data sheet is auto-selected. Change it if needed.</div>
+      </div>
+      <div class="map-grid" id="mapGrid"></div>
+      <div class="btn-row">
+        <button class="btn primary" id="generateBtn" type="button">Generate report &rarr;</button>
+      </div>
+      <div id="mapNotice"></div>
+    </div>
+
+    <!-- REPORT -->
+    <div id="report" class="hidden">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+          <div>
+            <h2 style="font-size:18px">Weekly Report</h2>
+            <p class="week-label" id="reportMeta"></p>
+          </div>
+          <div class="btn-row no-print" style="margin-top:0">
+            <button class="btn" id="printBtn" type="button">🖨 Print / Save PDF</button>
+          </div>
+        </div>
+        <div class="kpi-grid" id="kpiGrid" style="margin-top:16px"></div>
+      </div>
+
+      <!-- AI ANALYSIS -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+          <div>
+            <h2>Analysis &amp; recommendations</h2>
+            <p class="sub" id="aiSourceLabel">Generated for HR stakeholders.</p>
+          </div>
+          <button class="btn primary no-print" id="aiBtn" type="button">✨ Generate with Claude</button>
+        </div>
+        <div id="aiNotice"></div>
+        <div id="aiContent"></div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="card">
+        <h2>Visuals</h2>
+        <p class="sub">Workload, progress, and status across the team for the reporting period.</p>
+        <div class="chart-grid" id="chartGrid"></div>
+      </div>
+
+      <!-- PER-DEV TABLE -->
+      <div class="card">
+        <h2>Per-developer breakdown</h2>
+        <p class="sub">Task load and status for each team member.</p>
+        <div class="tbl-scroll">
+          <table class="dev-tbl" id="devTable"></table>
+        </div>
+      </div>
+
+      <!-- CURRENT WEEK GOALS (only if present in workbook) -->
+      <div class="card hidden" id="goalsCard">
+        <h2>Goals for the coming week</h2>
+        <p class="sub">Planned focus items carried into next week.</p>
+        <div id="goalsBody" class="ai-body"></div>
+      </div>
+
+      <!-- ISSUES & CONCERNS (only if present in workbook) -->
+      <div class="card hidden" id="issuesCard">
+        <h2>Issues &amp; concerns</h2>
+        <p class="sub">Raised items and recommendations.</p>
+        <div id="issuesBody" class="ai-body"></div>
+      </div>
+    </div>
+
+    <footer class="app-foot">
+      HR Weekly Report Generator · runs entirely in your browser · no backend required
+    </footer>
+  </div>
+
+  <script src="js/xlsx.full.min.js"></script>
+  <script src="js/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
