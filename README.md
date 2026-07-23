@@ -1,8 +1,8 @@
-# HR Weekly Report Generator
+# HR Worklog
 
 A single-page website that turns a weekly Excel export of **HR-project workload,
 tasks, and progress per developer** into a visual, stakeholder-ready report —
-with optional AI-written analysis by Claude.
+with optional AI-written analysis (Google Gemini free tier or Claude).
 
 Everything runs **in the browser**. There is no backend, no build step, and no
 server to maintain — which is exactly why it can be hosted for free on GitHub
@@ -83,37 +83,37 @@ Because it loads local `.js` files, open it through a tiny web server (opening t
 file directly with `file://` can block the scripts in some browsers):
 
 ```bash
-cd hr-weekly-report
+cd hr-worklog
 python3 -m http.server 8137
 # then visit http://localhost:8137
 ```
 
 ## Deploy to GitHub Pages (free)
 
-Hosted at **https://more-thread.github.io/hr-weekly-report/**. Free GitHub Pages
+Hosted at **https://more-thread.github.io/hr-worklog/**. Free GitHub Pages
 requires a **public** repo — that's fine here, because the code contains no real
 data (all `*.xlsx` spreadsheets are git-ignored and never committed).
 
 ### Option A — GitHub web UI (no command line)
 
-1. Create a new repository on GitHub, e.g. `hr-weekly-report`.
+1. Create a new repository on GitHub, e.g. `hr-worklog`.
 2. Click **Add file → Upload files**, drag in **all** the files/folders from this
    project (`index.html`, `css/`, `js/`), and commit.
 3. Go to **Settings → Pages**.
 4. Under **Build and deployment → Source**, choose **Deploy from a branch**.
 5. Set branch to **`main`** and folder to **`/ (root)`**, then **Save**.
 6. Wait ~1 minute. Your site is live at
-   `https://<your-username>.github.io/hr-weekly-report/`.
+   `https://<your-username>.github.io/hr-worklog/`.
 
 ### Option B — Git command line
 
 ```bash
-cd hr-weekly-report
+cd hr-worklog
 git init
 git add .
 git commit -m "HR weekly report generator"
 git branch -M main
-git remote add origin https://github.com/<your-username>/hr-weekly-report.git
+git remote add origin https://github.com/<your-username>/hr-worklog.git
 git push -u origin main
 ```
 
@@ -158,13 +158,13 @@ Without a key, the report still generates using the built-in (non-AI) analysis.
 ## Privacy
 
 - Spreadsheet parsing and all chart rendering happen entirely client-side.
-- Only when you explicitly click **Generate with Claude** is an *aggregated*
-  summary of the data (per-developer/per-project totals and flagged tasks — not
-  the raw file) sent to Anthropic's API to write the narrative.
+- Only when you explicitly click **Generate with AI** is an *aggregated* summary
+  of the data (per-developer/per-project totals and flagged tasks — not the raw
+  file) sent to your chosen provider (Google or Anthropic) to write the narrative.
 
 ## Tech
 
 - [SheetJS](https://sheetjs.com) — Excel/CSV parsing
 - [Chart.js](https://www.chartjs.org) — charts
-- Anthropic Messages API — optional AI analysis
+- Google Gemini / Anthropic Messages API — optional AI analysis
 - Vanilla HTML/CSS/JS — no framework, no build
