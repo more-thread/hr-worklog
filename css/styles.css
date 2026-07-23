@@ -111,6 +111,12 @@ details.settings summary::before { content: "⚙"; }
 
 /* Upload */
 .dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
   border: 2px dashed var(--border);
   border-radius: var(--radius);
   padding: 40px 20px;
@@ -119,9 +125,11 @@ details.settings summary::before { content: "⚙"; }
   transition: border-color .15s, background .15s;
   background: var(--surface-2);
 }
+/* children shouldn't intercept drag events (prevents dragleave flicker) or clicks */
+.dropzone > * { pointer-events: none; }
 .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: var(--accent-soft); }
-.dropzone .big { font-size: 34px; }
-.dropzone p { margin: 8px 0 2px; font-weight: 600; }
+.dropzone .big { font-size: 34px; line-height: 1; }
+.dropzone p { margin: 6px 0 2px; font-weight: 600; }
 .dropzone small { color: var(--text-muted); }
 .dropzone input { display: none; }
 
