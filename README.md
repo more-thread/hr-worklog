@@ -88,33 +88,11 @@ python3 -m http.server 8137
 # then visit http://localhost:8137
 ```
 
-## Hosting
+## Deploy to GitHub Pages (free)
 
-This repo is **private**, and free GitHub Pages only works on **public** repos.
-So there are two good paths:
-
-### Recommended for a private repo — Netlify or Cloudflare Pages (free)
-
-Both can deploy the site from a **private** GitHub repo — the repo stays private,
-the site is publicly reachable (it contains no real data). It's a static site with
-no build step, so setup is a few clicks:
-
-**Netlify**
-1. Sign in at [app.netlify.com](https://app.netlify.com) with GitHub.
-2. **Add new site → Import an existing project → GitHub**, authorize, pick
-   `hr-weekly-report`.
-3. Leave build command **empty** and publish directory **`.`** (root). Deploy.
-4. You get a URL like `https://<name>.netlify.app`. Every `git push` redeploys.
-
-**Cloudflare Pages** — same idea at
-[dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages → Create →
-Pages → Connect to Git**; framework preset **None**, build command empty, output
-directory `.`.
-
-### GitHub Pages (only if you make the repo public)
-
-Free GitHub Pages requires a public repo. If you make it public (the code has no
-real data — spreadsheets are git-ignored):
+Hosted at **https://more-thread.github.io/hr-weekly-report/**. Free GitHub Pages
+requires a **public** repo — that's fine here, because the code contains no real
+data (all `*.xlsx` spreadsheets are git-ignored and never committed).
 
 ### Option A — GitHub web UI (no command line)
 
